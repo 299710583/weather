@@ -1,0 +1,42 @@
+PODS:
+  - AAInfographics (9.0.0)
+  - Alamofire (5.9.1)
+  - NVActivityIndicatorView (5.2.0):
+    - NVActivityIndicatorView/Base (= 5.2.0)
+  - NVActivityIndicatorView/Base (5.2.0)
+  - SwiftPullToRefresh (3.1.1)
+  - SwiftyJSON (5.0.2)
+
+DEPENDENCIES:
+  - AAInfographics (from `https://github.com/AAChartModel/AAChartKit-Swift.git`)
+  - Alamofire
+  - NVActivityIndicatorView
+  - SwiftPullToRefresh
+  - SwiftyJSON
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - NVActivityIndicatorView
+    - SwiftPullToRefresh
+    - SwiftyJSON
+
+EXTERNAL SOURCES:
+  AAInfographics:
+    :git: https://github.com/AAChartModel/AAChartKit-Swift.git
+
+CHECKOUT OPTIONS:
+  AAInfographics:
+    :commit: 222b74aa37f06b8dd68a8b178264b4fae34d8d5a
+    :git: https://github.com/AAChartModel/AAChartKit-Swift.git
+
+SPEC CHECKSUMS:
+  AAInfographics: 31fd2891509a97e34693aeaf681daa7b2b4d8c0f
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  NVActivityIndicatorView: fe52a6a68664c2df8991d7d9e3d86d8d19453c53
+  SwiftPullToRefresh: f61d67439c5b8d66420fe57193cab8c279398e7a
+  SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
+
+PODFILE CHECKSUM: e5e51bbc5605bb56904ad4c65f24b4071f9d2a80
+
+COCOAPODS: 1.15.2
