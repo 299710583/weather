@@ -9,11 +9,11 @@ import UIKit
 
 class WeatherView: UIScrollView {
     var fullSize: CGSize?
-    var weatherLabel:UILabel?
-    var cityLabel:UILabel?
-    var tempLabel:UILabel?
-    var humidityLabel:UILabel?
-    var windLabel:UILabel?
+    var weatherLabel: UILabel?
+    var cityLabel: UILabel?
+    var tempLabel: UILabel?
+    var humidityLabel: UILabel?
+    var windLabel: UILabel?
     
     init() {
         super.init(frame: .zero)
@@ -21,7 +21,6 @@ class WeatherView: UIScrollView {
         self.indicatorStyle = .black
         self.isScrollEnabled = true
         self.backgroundColor = .clear
-        
     }
     
     required init?(coder: NSCoder) {

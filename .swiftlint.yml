@@ -1,0 +1,508 @@
+#swiftlint rules: https://realm.github.io/SwiftLint/rule-directory.html
+
+included: # 执行 linting 时包含的路径。如果出现这个 `--path` 会被忽略
+  - weather-demo
+#excluded: # 执行 linting 时忽略的路径。 优先级比 `included` 更高
+#  - Pods
+#  - weather-demo/Pods
+#  - weather-demo/Frameworks
+# 执行时排除掉的规则
+disabled_rules:
+  # 标识符应使用包容性语言，避免基于种族、性别或社会经济地位对人群的歧视
+  - inclusive_language
+  
+  # 标记为私有的单元测试会被静默地跳过
+  - private_unit_test
+  
+  # XCTFail 调用应包括对断言的描述
+  - xctfail_message
+  
+  # 类型最多嵌套 1 层，函数最多嵌套 2 层
+  - nesting
+  
+  # 使用 #unavailable/#available 而不是 #available/#unavailable 与空正文
+  - unavailable_condition
+  
+  # 应避免使用三目运算符调用 Void 函数
+  - void_function_in_ternary
+  
+  # @IBInspectable 应该只应用于变量，具有明确的类型并且是受支持的类型
+  - valid_ibinspectable
+  
+  # 推荐 != nil 而不是 let _ =
+  - unused_optional_binding
+  
+  # 随机数更推荐使用 type.random(in:)
+  - legacy_random
+
+  # 应避免使用强制解包（类型转换）
+  - force_cast
+  
+  # 不使用 setter value
+  - unused_setter_value
+  
+  # 当传递多个闭包参数时，不应使用尾随闭包语法
+  - multiple_closures_with_trailing_closure
+  
+  # 应限制功能体的复杂性(圈复杂度)
+  - cyclomatic_complexity
+  
+  # 委托协议应该是仅类的，以便它们可以被弱引用
+  - class_delegate_protocol
+  
+  # 可用性检查或属性不应使用部署目标满足的旧版本
+  - deployment_target
+
+# 一些规则仅仅是可选的
+opt_in_rules:
+  # 应避免强制解包，不包含声明时
+  - force_unwrapping
+  
+  # 应避免显式调用 .init()，仅在明确类型的情况
+  - explicit_init
+  
+  # 闭包表达式在每个大括号内应该有一个空格
+  - closure_spacing
+  
+  # 集合文字中的所有元素都应垂直对齐
+  - collection_alignment
+  
+  # 使用逗号分隔继承列表中的类型
+  - comma_inheritance
+  
+  # 推荐使用 isEmpty 来判断集合与数组或字典是否为空，字符串不为空，对于计数为 0 的判断
+  - empty_collection_literal
+  #- empty_count  该规则注释掉，因为是 error 等级，项目中有两百多处
+  - empty_string
+  
+  # 一个 fatalError 调用应该有一条消息
+  - fatal_error_message
+  
+  # 链式函数调用应该在同一行，或者每行一个
+  - multiline_function_chains
+  
+  # 函数和方法参数应该在同一行，或者每行一个
+  - multiline_parameters
+  
+  # 操作符在被使用时应该被一个空格包围
+  - operator_usage_whitespace
+
+  # Self 在 type(of: self) 访问属性或调用方法时优先
+  - prefer_self_type_over_type_of_self
+  
+  # 具有零参数的显式初始化推荐使用 .zero（​​例如CGPoint(x: 0, y: 0)
+  - prefer_zero_over_explicit_init
+  
+  # 变量不应该有多余的类型注解
+  - redundant_type_annotation
+  
+  # 声明闭包参数时不需要括号
+  - unneeded_parentheses_in_closure_argument
+  
+  # 如果函数参数在方法调用中位于多行中，则应垂直对齐
+  - vertical_parameter_alignment_on_call
+  
+  # 不要在右大括号之前包含垂直空格（空行）
+  - vertical_whitespace_closing_braces
+  
+  # 打开大括号后不要包含垂直空格（空行）
+  - vertical_whitespace_opening_braces
+  
+  # 用 weak 修饰 delegate 以避免引用循环
+  - weak_delegate
+  
+  # 常量字面量应放在比较运算符的右侧
+  - yoda_condition
+  
+  # 所有声明都应明确指定访问控制级别关键字
+  # - explicit_acl
+  
+  # 一些被覆盖的方法应该总是调用 super
+  # - overridden_super_call
+  
+  # 应尽可能使用尾随闭包语法
+  #- trailing_closure
+  
+  # 参数应该在同一行，或者每行一个
+  #- multiline_arguments
+  
+  # 使用块注册通知时，应存储返回的不透明观察者，以便以后将其删除
+  #- discarded_notification_center_observer
+
+# 默认规则
+
+# 首选速记运算符（+=、-=、*=、/=）而不是执行操作和分配
+shorthand_operator: warning
+
+# 行不应跨越太多字符
+line_length:
+  - 2000
+  #error: 2000
+
+# 函数体不应跨越太多行
+function_body_length:
+  warning: 200
+  error: 400
+
+# 函数参数的数量不应该太多
+function_parameter_count:
+  warning: 10
+  error: 15
+  # 是否忽略默认参数
+  ignores_default_parameters: true
+
+# 文件不应该有太多行
+file_length:
+  warning: 1200
+  error: 2000
+  # 忽略仅注释行
+  ignore_comment_only_lines: true
+  
+# 类型正文不应跨越太多行
+type_body_length:
+  - 1000
+  - 2000
+
+# 类型名称只能包含字母数字字符，以大写字符开头，长度介于 3 到 40 个字符之间。私有类型可以以下划线开头
+type_name:
+  min_length:
+    warning: 3
+    error: 0
+  max_length:
+    warning: 50
+    error: 100
+  excluded: ["T"]
+  allowed_symbols: []
+  validates_start_with_lowercase: false
+
+# 元组不应该有太多的成员，可改为创建自定义类型
+large_tuple:
+  warning: 5
+  error: 10
+  
+# 通用类型(范型)名称只能包含字母数字字符，以大写字符开头，长度在 1 到 20 个字符之间
+generic_type_name:
+  min_length:
+    warning: 1
+    error: 0
+  max_length:
+    warning: 20
+    error: 40
+  excluded: []
+  allowed_symbols: []
+  validates_start_with_lowercase: false
+
+# 标识符名称应仅包含字母数字字符并以小写字符开头或应仅包含大写字母
+# 在上述情况的一个例外情况下，当变量名被声明为静态和不可变时，它们可以以大写字母开头，变量名不应太长或太短
+identifier_name:
+  min_length:
+    warning: 2
+    error: 0
+  max_length:
+    warning: 40
+    error: 50
+  excluded: ["x", "y"]
+  allowed_symbols: ["_"]
+  validates_start_with_lowercase: false
+  
+# 更推荐使用 .allSatisfy() 或 .contains() 而不是 reduce(true) 或 reduce(false)
+reduce_boolean: warning
+  
+# 具有重复键的字典文字将在运行时崩溃
+duplicated_key_in_dictionary_literal: error
+ 
+# 避免同时使用 'dynamic' 和 '@inline(__always)'
+dynamic_inline: error
+
+# 建议使用基于 block 的 KVO
+block_based_kvo: warning #隐式
+  
+# 带有右括号的右大括号中间不应有任何空格
+closing_brace: warning
+
+# 闭包参数应与左大括号位于同一行
+closure_parameter_position: warning
+
+# 冒号应该在标识符旁边，在字典文字中的键旁边
+colon:
+  severity: warning
+  flexible_right_spacing: false
+  apply_to_dictionaries: true
+
+# 任何逗号前后都不应有空格
+comma: warning
+
+# 建议在斜线后至少留一个空格作为注释
+comment_spacing: warning
+
+# 在编译器协议中声明的初始化程序 ExpressibleByArrayLiteral 不应直接调用
+compiler_protocol_init: warning
+
+# 计算属性和下标中的 getter 和 setter 的顺序应该一致
+computed_accessors_order:
+  severity: warning
+  order: get_set
+
+# if, for, guard, switch, while 和 catch 语句不应不必要地将其条件或参数括在括号中
+control_statement: warning
+
+# 不鼓励直接初始化可能有害的类型
+discouraged_direct_init:
+  types: ["Bundle", "Bundle.init", "UIDevice", "UIDevice.init"]
+
+# 枚举不能包含多个具有相同名称的案例
+duplicate_enum_cases: warning
+
+# import 应该是唯一的
+duplicate_imports: warning
+
+# 如果未使用枚举与关联值匹配，则可以省略参数
+empty_enum_arguments: warning
+
+# 推荐 () -> 而不是 Void ->
+empty_parameters: warning
+
+# 使用尾随闭包时，应避免在方法调用后使用空括号
+empty_parentheses_with_trailing_closure: warning
+  
+# 对于单个 for 循环中的 单个 if，更推荐使用 where
+for_where: warning
+
+# 应避免使用强制 try
+force_try: warning
+
+# 计算的只读属性和下标应避免使用 get 关键字
+implicit_getter: warning
+
+# 如果 defer 在其父作用域的末尾，它将在它所在的地方执行
+inert_defer: warning
+
+# 推荐使用 Set.isDisjoint(with:) 而不是 Set.intersection(_:).isEmpty
+is_disjoint: warning
+
+# 文件不应包含前导空格
+leading_whitespace: warning
+
+# 结构扩展属性和方法优于遗留函数
+legacy_cggeometry_functions: warning
+legacy_nsgeometry_functions: warning
+
+# 结构范围的常量优于传统的全局常量
+legacy_constant: warning
+
+# Swift 构造函数优于传统的便利函数
+legacy_constructor: warning
+
+# 推荐使用 hash(into:) 函数而不是覆盖 hashValue
+legacy_hashing: warning
+
+# MARK 注释应采用有效格式。例如 '// MARK: ...' 或 '// MARK: - ...'
+mark: warning
+
+# case只有在包含至少一个其他语句的情况下才能使用 Fallthroughs
+no_fallthrough_only: warning
+
+# 不要在方法名称和括号之间添加空格
+no_space_in_method_call: warning
+
+# 一个对象应该只将自己作为观察者移除deinit
+notification_center_detachment: warning
+
+# NSObject 子类应该实现 isEqual 而不是 ==
+nsobject_prefer_isequal: warning
+
+# 左大括号前面应该有一个空格，并且与声明在同一行
+opening_brace:
+  severity: warning
+  allowMultilineFunc: false
+
+# 定义运算符时，它们应该被一个空格包围
+operator_whitespace: warning
+
+# 文档注释应附加到声明中
+orphaned_doc_comment: warning
+
+# 优先使用 private 而不是 fileprivate
+private_over_fileprivate:
+  validate_extensions: false
+
+# 在协议中声明属性时，访问器的顺序应该是 get set
+protocol_property_accessors_order: warning
+
+# _ = foo() 在 let _ = foo() 丢弃函数的结果时优先
+redundant_discardable_let: warning
+
+# Objective-C 属性 (@objc) 在声明中是多余的
+redundant_objc_attribute: warning
+
+# 用 nil 初始化可选变量是多余的
+redundant_optional_initialization: warning
+
+# 如果属性设置器访问级别与变量访问级别相同，则不应明确
+redundant_set_access_control: warning
+
+# 当字符串枚举值等于枚举名称时，可以省略它们
+redundant_string_enum_value: warning
+
+# 在函数声明中返回 Void 是多余的
+redundant_void_return: warning
+
+# 返回箭头和返回类型应该用一个空格分隔或单独一行
+return_arrow_whitespace: warning
+
+# self 指未应用的 NSObject.self() 方法，这可能不是预期的。使变量 lazy 能够引用当前实例或使用 ClassName.self
+self_in_property_initialization: warning
+
+# else 和 catch 应该在同一行，在前一个声明之后一个空格
+statement_position:
+  severity: warning
+  statement_mode: default
+
+# case 语句应该与其封闭的 switch 语句垂直对齐，或者如果配置为缩进
+switch_case_alignment:
+  severity: warning
+  indented_cases: false
+
+# 应使用速记语法糖，即 [Int] 而不是 Array
+syntactic_sugar: warning
+
+# 应避免/强制使用数组和字典中的尾随逗号
+trailing_comma:
+  severity: warning
+  mandatory_comma: false
+
+# 文件应该有一个尾随换行符
+trailing_newline: warning
+
+# 行不应有尾随分号
+trailing_semicolon: warning
+
+# 行不应有尾随空格
+trailing_whitespace:
+  severity: warning
+  ignores_empty_lines: true
+  ignores_comments: true
+
+# 避免使用不需要的 break 语句
+unneeded_break_in_switch: warning
+
+# 应删除捕获列表中未使用的引用
+unused_capture_list: warning
+
+# 闭包中未使用的参数应替换为_
+unused_closure_parameter: warning
+
+# 应删除未使用的控制流标签
+unused_control_flow_label: warning
+
+# 当索引或项目不被使用时，.enumerated()可以被移除
+unused_enumerated: warning
+
+# 如果函数参数在声明中位于多行中，则应垂直对齐
+vertical_parameter_alignment: warning
+
+# 将垂直空白限制为单个空行
+vertical_whitespace:
+  severity: warning
+  max_empty_lines: 1
+
+# 推荐 -> Void 而不是 -> ()
+void_return: warning
+
+# 应该解决 TODO 和 FIXME
+todo: warning
+
+# 推荐 != nil 而不是 let _ =
+# unused_optional_binding:
+#   severity: warning
+#   ignore_optional_try: false
+
+# 类型最多嵌套 1 层，函数最多嵌套 2 层
+# nesting:
+#   type_level: 1
+#   function_level: 2
+#   check_nesting_in_closures_and_statements: true
+#   always_allow_one_type_in_functions: false
+
+# 随机数更推荐使用 type.random(in:)
+# legacy_random: warning
+
+# 应避免使用强制解包（类型转换）
+# force_cast: warning
+
+# 当传递多个闭包参数时，不应使用尾随闭包语法
+#multiple_closures_with_trailing_closure: warning
+
+# 委托协议应该是仅类的，以便它们可以被弱引用
+#class_delegate_protocol:
+  #severity: warning      #显式
+
+# 应限制功能体的复杂性(圈复杂度)
+#cyclomatic_complexity:
+  #warning: 10
+  #error: 20
+  #ignores_case_statements: true
+
+# 不使用 setter value
+# unused_setter_value: warning
+
+# 可用性检查或属性不应使用部署目标满足的旧版本
+#deployment_target:
+  #iOSApplicationExtension_deployment_target: 12.0
+  #iOS_deployment_target: 12.0
+  
+analyzer_rules: # Rules run by `swiftlint analyze`
+  # 应该需要所有导入的模块才能使文件编译
+  - unused_import
+  
+  # 非常量变量不应列在闭包的捕获列表中，以避免混淆在创建时捕获变量的闭包
+  #- capture_variable
+
+# 自定义规则
+custom_rules:
+  # 解决循环引用更推荐使用 weak 而不是 unowned
+  circular_reference_mark:
+    included:
+      - ".*\\.swift"
+    name: "Circular Reference Mark"
+    regex: "(\\[unowned)"
+    message: "Prefer weak over unowned"
+    severity: warning
+    
+  # 项目图片加载应该避免直接使用sd_setImage系列方法
+  sd_setBackgroundImage_usage_mark:
+    included:
+      - ".*\\.swift"
+    name: "Avoid Direct sd_setBackgroundImage"
+    regex: "\\bsd_setBackgroundImage\\b"
+    message: "Avoid using sd_setBackgroundImage directly. Use ivy_setBackgroundImage instead"
+    severity: warning
+  sd_setImage_usage_mark:
+    included:
+      - ".*\\.swift"
+    name: "Avoid Direct sd_setImage"
+    regex: "\\bsd_setImage\\b"
+    message: "Avoid using sd_setImage directly. Use ivy_setImage instead"
+    severity: warning
+    
+  # 中括号两边内侧不应该有空格
+  no_spacing_around_brackets:
+    included:
+      - ".*\\.swift"
+    name: "No Spacing Around Brackets"
+    regex: "\\[\\s+\\S+\\s+\\]"
+    message: "There should be no space around brackets when they contain content"
+    severity: warning
+
+  # 不建议使用索引获取元组元素
+  tuple_element:
+    included:
+      - ".*\\.swift"
+    name: "Tuple Elements"
+    regex: "[a-zA-Z]+\\.[0-9]+"
+    match_kinds:
+      - identifier
+      - number
+    message: "Tuple elements are not recommended to be accessed using indexes"
+    severity: warning
+

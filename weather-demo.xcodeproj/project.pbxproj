@@ -20,6 +20,7 @@
 		DEDD9C2D2BEF4E5E00AB89FD /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDD9C2C2BEF4E5E00AB89FD /* WeatherView.swift */; };
 		DEDD9C2F2BEF621B00AB89FD /* MySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDD9C2E2BEF621B00AB89FD /* MySearchViewController.swift */; };
 		DEDD9C312BEF6A5B00AB89FD /* NewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDD9C302BEF6A5B00AB89FD /* NewPageViewController.swift */; };
+		DEDD9CC32BF22EDA00AB89FD /* CityList.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEDD9CC22BF22EDA00AB89FD /* CityList.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		DEDD9C2C2BEF4E5E00AB89FD /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		DEDD9C2E2BEF621B00AB89FD /* MySearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySearchViewController.swift; sourceTree = "<group>"; };
 		DEDD9C302BEF6A5B00AB89FD /* NewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageViewController.swift; sourceTree = "<group>"; };
+		DEDD9CC22BF22EDA00AB89FD /* CityList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = CityList.plist; path = "weather-demo/CityList.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				DEDD9C212BEF25C900AB89FD /* Model */,
 				DE3B05572BDF9E2D004528D2 /* AppDelegate.swift */,
 				DE3B05592BDF9E2D004528D2 /* SceneDelegate.swift */,
+				DEDD9CC22BF22EDA00AB89FD /* CityList.plist */,
 				DE3B055D2BDF9E2D004528D2 /* Main.storyboard */,
 				DE3B05602BDF9E2E004528D2 /* Assets.xcassets */,
 				DE3B05622BDF9E2E004528D2 /* LaunchScreen.storyboard */,
@@ -153,6 +156,7 @@
 				DE3B05512BDF9E2D004528D2 /* Frameworks */,
 				DE3B05522BDF9E2D004528D2 /* Resources */,
 				908790B698E601FF067C8664 /* [CP] Embed Pods Frameworks */,
+				DEC6CED72BF33849004172F7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -203,6 +207,7 @@
 			files = (
 				DE3B05612BDF9E2E004528D2 /* Assets.xcassets in Resources */,
 				DE3B05642BDF9E2E004528D2 /* Base in Resources */,
+				DEDD9CC32BF22EDA00AB89FD /* CityList.plist in Resources */,
 				DE3B055F2BDF9E2D004528D2 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,6 +253,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-weather-demo/Pods-weather-demo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		DEC6CED72BF33849004172F7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Swiftlint\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\nswiftlint --config ${SRCROOT}/.swiftlint.yml\nelse\necho\"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

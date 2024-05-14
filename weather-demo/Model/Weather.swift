@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Weather{
+class Weather: Codable {
     var city: String?
     var weather: String?
     var temperature: Int?
@@ -19,12 +19,9 @@ class Weather{
     var maxTemps: [Double]?
     var minTemps: [Double]?
     var weathers: [String]?
-
     
-    init(_ city: String,_ cityZh: String){
+    init(_ city: String, _ cityZh: String) {
         self.city = city
         self.cityZh = cityZh
     }
-    
-    
 }
