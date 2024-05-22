@@ -8,27 +8,28 @@
 import UIKit
 import SwiftPullToRefresh
 import AAInfographics
-
+import FlexLayout
 // 天气页面
 class MyWeatherViewController: UIViewController {
-    var weatherView = WeatherView()
-    var fullSize: CGSize?
-    var cityName: String?
-    var myImageView = UIImageView(
+    private var weatherView = WeatherView()
+    private lazy var myImageView = UIImageView(
         frame: CGRect(
           x: 0, y: 0, width: 220, height: 200))
-    var weather: String?
-    var weatherLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
-    var cityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
-    var tempLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
-    var humidityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
-    var windLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
-    var cityZh: String?
-    var weatherData: Weather?
-    var requestService: RequestService?
-    var nextTime: String?
-    var chartView: AAChartView?
-    var chartModel: AAChartModel?
+    private lazy var weatherLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+    private lazy var cityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+    private lazy var tempLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+    private lazy var humidityLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+    private lazy var windLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+    private lazy var dateFormatter = DateFormatter()
+    private var weather: String?
+    private var fullSize: CGSize?
+    private var cityName: String?
+    private var cityZh: String?
+    private var weatherData: Weather?
+    private var requestService: RequestService?
+    private var nextTime: String?
+    private var chartView: AAChartView?
+    private var chartModel: AAChartModel?
     
     init(_ cityName: String, _ cityZh: String) {
         super.init(nibName: nil, bundle: nil)
@@ -43,16 +44,15 @@ class MyWeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         creatView()
-        print("nihao")
+        
     }
 }
 
 extension MyWeatherViewController {
     func creatView() {
         let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        fullSize = view.bounds.size
         dateFormatter.dateFormat = "HH:mm:ss" // 仅保留时分秒部分
+        fullSize = view.bounds.size
         guard let fullSize = fullSize else { return }
         nextTime = dateFormatter.string(from: currentDate)
         
@@ -66,60 +66,58 @@ extension MyWeatherViewController {
         
         // 下拉刷新，并且在里边写刷新要执行的是
         weatherView.spr_setTextHeader { [weak self] in
+            guard let `self` = self else { return }
             let label = UILabel()
             // 这里之后要定义一个nextTime，用来记录最近更新时间
-            label.text = "最近更新时间\(String(describing: self?.nextTime ?? " "))"
+            label.text = "最近更新时间\(String(describing: self.nextTime ?? " "))"
             let currentDate = Date()
-
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm:ss" // 仅保留时分秒部分
-            self?.nextTime = dateFormatter.string(from: currentDate)
+            self.nextTime = self.dateFormatter.string(from: currentDate)
             
             label.textColor = .black
             label.textAlignment = .center
             label.frame = CGRect(x: 0, y: 10, width: 200, height: 20)
             label.tag = 123
-            label.center = CGPoint(x: (self?.fullSize?.width ?? 0) * 0.5, y: 10)
+            label.center = CGPoint(x: (self.fullSize?.width ?? 0) * 0.5, y: 10)
             label.font = UIFont.systemFont(ofSize: 14)
             
-            self?.weatherView.addSubview(label)
-            self?.requestService = RequestService(city: self?.cityName ?? "", cityZh: self?.cityZh ?? "")
-//            self?.requestService?.block
+            self.weatherView.addSubview(label)
+            self.requestService = RequestService(city: self.cityName ?? "", cityZh: self.cityZh ?? "")
             
-            self?.requestService?.block = {[weak self] data in
+            self.requestService?.block = {[weak self] data in
                 guard let `self` = self else { return }
-                
                 self.weatherData = data
                 refresh()
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self?.weatherView.spr_endRefreshing()
+                self.weatherView.spr_endRefreshing()
                 // 移除文字标签
-                if let labelToRemove = self?.weatherView.viewWithTag(123) {
+                if let labelToRemove = self.weatherView.viewWithTag(123) {
                     labelToRemove.removeFromSuperview()
                 }
             }
         }
+        componentStyle()
         self.view.addSubview(weatherView)
         let nameChange = NameChange()
         guard let cityZh = cityZh else { return }
         cityName = nameChange.dict[cityZh]
         requestService = RequestService(city: cityName ?? " ", cityZh: cityZh)
-//        guard var weatherData = weatherData else { return }
-        
         requestService?.block = {[weak self] data in
             guard let `self` = self else { return }
-            
             weatherData = data
             drawChart()
             insertData()
         }
+    }
+    func componentStyle() {
+        guard let fullSize = fullSize else { return }
         // 位置
         cityLabel.textColor = .white
         cityLabel.textAlignment = .center
         cityLabel.center = CGPoint(x: (fullSize.width) * 0.5, y: (fullSize.height) * 0.1)
         cityLabel.font = UIFont(name: "Arial", size: 55)
         self.weatherView.addSubview(cityLabel)
+        
         // 图片
         myImageView = UIImageView(
             frame: CGRect(
@@ -128,7 +126,6 @@ extension MyWeatherViewController {
         self.weatherView.addSubview(myImageView)
         
         // 温度 湿度
-        
         tempLabel.textColor = .white
         tempLabel.textAlignment = .center
         tempLabel.center = CGPoint(x: (fullSize.width) * 0.25, y: (fullSize.height) * 0.5)
@@ -142,7 +139,6 @@ extension MyWeatherViewController {
         self.weatherView.addSubview(humidityLabel)
         
         // 天气描述
-        
         weatherLabel.textColor = .white
         weatherLabel.textAlignment = .center
         weatherLabel.center = CGPoint(x: (fullSize.width) * 0.5, y: (fullSize.height) * 0.4)
@@ -150,7 +146,6 @@ extension MyWeatherViewController {
         self.weatherView.addSubview(weatherLabel)
         
         // 风速,风向
-        
 //        print(weatherData.windSpeed ?? "dedede")
         windLabel.textColor = .white
         windLabel.textAlignment = .center
@@ -176,12 +171,6 @@ extension MyWeatherViewController {
         // 风向风速
         weatherText = "风向\(weatherData?.windDirection ?? " ")  风速\(weatherData?.windSpeed ?? 0.0) kph"
         windLabel.text = weatherText
-        self.weatherView.addSubview(cityLabel)
-        self.weatherView.addSubview(myImageView)
-        self.weatherView.addSubview(tempLabel)
-        self.weatherView.addSubview(humidityLabel)
-        self.weatherView.addSubview(weatherLabel)
-        self.weatherView.addSubview(windLabel)
     }
     
     func refresh() {
@@ -193,7 +182,7 @@ extension MyWeatherViewController {
         chartView?.aa_onlyRefreshTheChartDataWithChartModelSeries(newData)
         insertData()
     }
-    
+
     func drawChart() {
         chartView = AAChartView()
         chartView?.frame = CGRect(x: 0, y: 0, width: fullSize?.width ?? 0, height: (fullSize?.height ?? 0) * 0.4)
@@ -233,39 +222,13 @@ extension MyWeatherViewController {
     }
     
     func imageForWeather(weatherName: String?) -> UIImage? {
-        guard let weatherName = weatherName else { return nil }
-        var weatherImage: UIImage?
+        // 获取城市图片
+        let filePath = Bundle.main.path(forResource: "WeatherImageList", ofType: "plist")
+        let weatherImageList = NSDictionary(contentsOfFile: filePath ?? "晴天")
         
-        switch weatherName {
-        case "晴":
-            weatherImage = UIImage(named: "qing")
-        case "多云", "局部多云":
-            weatherImage = UIImage(named: "duoyun")
-        case "晴间多云":
-            weatherImage = UIImage(named: "qingjianduoyuan")
-        case "阴", "雾霾", "阴天":
-            weatherImage = UIImage(named: "yin")
-        case "小雪", "阵雪":
-            weatherImage = UIImage(named: "xiaoxue")
-        case "阴转晴":
-            weatherImage = UIImage(named: "yinzhuanqing")
-        case "小雨", "雷区有零星小雨":
-            weatherImage = UIImage(named: "xiaoyu")
-        case "大雨", "中雨", "中雨或大阵雨":
-            weatherImage = UIImage(named: "dayu")
-        case "雨转晴":
-            weatherImage = UIImage(named: "yuzhuanqing")
-        case "阵雨", "小阵雨":
-            weatherImage = UIImage(named: "zhenyu")
-        case "暴雨":
-            weatherImage = UIImage(named: "baoyu")
-        case "雨夹雪":
-            weatherImage = UIImage(named: "yujiaxue")
-        case "冰雹":
-            weatherImage = UIImage(named: "bingbao")
-        default:
-            weatherImage = UIImage(named: "qing")
-        }
+        guard let weatherName = weatherName else { return nil }
+        let weatherImageName = weatherImageList?.object(forKey: weatherName) as? String
+        let weatherImage = UIImage(named: weatherImageName ?? "qing")
         return weatherImage
     }
 }

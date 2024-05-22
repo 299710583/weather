@@ -8,14 +8,15 @@
 import UIKit
 
 class NewPageViewController: UIPageViewController {
-    var fullSize: CGSize?
-    var pages = [UIViewController]()
-    var pageControl = UIPageControl()
-    var currentPage = 0
-    let userDefault = UserDefaults.standard
-    var datas = [[String?]]()
-    let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-    var plistFileURL: URL?
+    private lazy var pages = [UIViewController]()
+    private lazy var pageControl = UIPageControl()
+    private var currentPage = 0
+    private lazy var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    
+    private var plistFileURL: URL?
+    private var fullSize: CGSize?
+    lazy var datas = [[String?]]()
+    
     init() {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
@@ -32,17 +33,15 @@ class NewPageViewController: UIPageViewController {
 //        let name1 = cityList?.object(forKey: "北京")
 //        let name2 = cityList?.object(forKey: "武汉")
 //        print(name1 ?? " ",name2 ?? " ")
-//
-        
+         
         dataSource = self
         delegate = self
         
         plistFileURL = documentsDirectoryURL?.appendingPathComponent("data.plist")
         loadArrayFromPlist()
         // 下次打开先判断缓存是不是为空
-        if datas.count == 0 {
+        if datas.isEmpty {
             // 创建并添加页面视图控制器
-            
             let page = MyWeatherViewController("wuhan", "武汉")
             pages.append(page)
             datas.append(["wuhan", "武汉"])
@@ -65,6 +64,7 @@ class NewPageViewController: UIPageViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         saveArrayToPlist()
     }
 }
@@ -103,7 +103,7 @@ extension NewPageViewController {
     @objc func addCityWeather() {
         // 跳转添加页面
         let searchVC = MySearchViewController()
-
+        
         searchVC.block = { [weak self] data in
             guard let `self` = self else { return }
             let weatherViewController = MyWeatherViewController((data?.city) ?? "", (data?.cityZh) ?? "")
@@ -144,15 +144,11 @@ extension NewPageViewController {
         }
     }
     func loadArrayFromPlist() {
-        do {
-            guard let plistFileURL = plistFileURL else { return }
-            if let data = try? Data(contentsOf: plistFileURL) {
-                if let datas = try? PropertyListDecoder().decode([[String]].self, from: data) {
-                    self.datas = datas
-                }
+        guard let plistFileURL = plistFileURL else { return }
+        if let data = try? Data(contentsOf: plistFileURL) {
+            if let datas = try? PropertyListDecoder().decode([[String]].self, from: data) {
+                self.datas = datas
             }
-        } catch {
-            print("取出数据失败！\(error)")
         }
     }
 }
@@ -170,7 +166,6 @@ extension NewPageViewController: UIPageViewControllerDataSource {
         guard let currentIndex = pages.firstIndex(of: viewController), currentIndex < pages.count - 1 else {
             return nil
         }
-        
         return pages[currentIndex + 1]
     }
 }

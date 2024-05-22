@@ -9,6 +9,7 @@ pod 'SwiftyJSON'
 pod 'NVActivityIndicatorView' 
 pod 'SwiftPullToRefresh'
 pod 'AAInfographics', :git => 'https://github.com/AAChartModel/AAChartKit-Swift.git'
+pod 'FlexLayout'
   # Pods for weather-demo
 
 end

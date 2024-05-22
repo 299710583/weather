@@ -1,6 +1,7 @@
 ${PODS_ROOT}/Target Support Files/Pods-weather-demo/Pods-weather-demo-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AAInfographics/AAInfographics.framework
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework
 ${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework
 ${BUILT_PRODUCTS_DIR}/SwiftPullToRefresh/SwiftPullToRefresh.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework

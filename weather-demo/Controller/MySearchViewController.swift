@@ -8,12 +8,12 @@
 import UIKit
 
 class MySearchViewController: UIViewController, UISearchBarDelegate {
-    var fullSize: CGSize?
-    var searchBar: UISearchBar?
-    var weatherData: Weather?
-    var requestService: RequestService?
-    var block: ((Weather?) -> Void)?
+    private var fullSize: CGSize?
+    private var searchBar: UISearchBar?
+    private var weatherData: Weather?
+    private var requestService: RequestService?
     
+    var block: ((Weather?) -> Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
         createView()
@@ -52,16 +52,22 @@ extension MySearchViewController {
             searchBar.becomeFirstResponder()
         }
         alertController.addAction(confirmAction)
-        
         searchBar.resignFirstResponder()
-        guard let cityZh = searchBar.text else { return }
         
+        guard let cityZh = searchBar.text else { return }
         // 查询天气
         let nameChange = NameChange()
-        
-        guard let cityName = nameChange.dict[cityZh] else { present(alertController, animated: true, completion: nil); return }
-        weatherData = RequestService(city: cityName, cityZh: cityZh).weather
-        
+        guard let cityName = nameChange.dict[cityZh] else {
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+        let semaphore = DispatchSemaphore(value: 0)
+        requestService = RequestService(city: cityName, cityZh: cityZh)
+        requestService?.block = { [weak self] data in
+            self?.weatherData = data
+            semaphore.signal()
+        }
+        semaphore.wait()
         // 判断输入是否合法
         // 若有错误弹窗，重新输入
         

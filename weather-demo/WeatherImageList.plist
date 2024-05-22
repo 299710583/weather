@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>晴</key>
+	<string>qing</string>
+	<key>多云</key>
+	<string>duoyun</string>
+	<key>局部多云</key>
+	<string>duoyun</string>
+	<key>晴间多云</key>
+	<string>qingjianduoyun</string>
+	<key>阴</key>
+	<string>yin</string>
+	<key>雾霾</key>
+	<string>yin</string>
+	<key>阴天</key>
+	<string>yin</string>
+	<key>小雪</key>
+	<string>xiaoxue</string>
+	<key>阵雪</key>
+	<string>xiaoxue</string>
+	<key>阴转晴</key>
+	<string>yinzhuanqing</string>
+	<key>小雨</key>
+	<string>xiaoyu</string>
+	<key>雷区有零星小雨</key>
+	<string>xiaoyu</string>
+	<key>大雨</key>
+	<string>dayu</string>
+	<key>中雨</key>
+	<string>dayu</string>
+	<key>中雨或大阵雨</key>
+	<string>dayu</string>
+	<key>雨转晴</key>
+	<string>yuzhuanqing</string>
+	<key>阵雨</key>
+	<string>zhenyu</string>
+	<key>小阵雨</key>
+	<string>zhenyu</string>
+	<key>暴雨</key>
+	<string>baoyu</string>
+	<key>雨夹雪</key>
+	<string>yujiaxue</string>
+	<key>冰雹</key>
+	<string>bingbao</string>
+</dict>
+</plist>

@@ -9,9 +9,9 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 class RequestService {
+    private var url: URL?
+    private var json: [String: Any]?
     var weather: Weather?
-    var url: URL?
-    var json: [String: Any]?
     var errors: String?
     var block: ((Weather) -> Void)?
     
@@ -50,7 +50,6 @@ class RequestService {
                     dates.append(element["date"].string ?? "")
                     // 取出最高最低气温
                     maxTemps.append(element["day"]["maxtemp_c"].double ?? 0.0)
-//                        print(element["day"]["maxtemp_c"].double ?? 0.0)
                     minTemps.append(element["day"]["mintemp_c"].double ?? 0.0)
                     // 取出天气
                     weathers.append(element["day"]["condition"]["text"].string ?? " ")

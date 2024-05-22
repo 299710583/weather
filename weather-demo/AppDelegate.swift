@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func saveArrayToPlist() {
         let datas = pageVC?.datas
-//        print("有多少数据\(datas?.count)")
         do {
             let data = try PropertyListEncoder().encode(datas)
             guard let plistFileURL = plistFileURL else { return }
@@ -42,19 +41,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loadArrayFromPlist() {
-            do {
-                guard let plistFileURL = plistFileURL else { return }
-                if let data = try? Data(contentsOf: plistFileURL) {
-                    if let datas = try? PropertyListDecoder().decode([[String]].self, from: data) {
-//                        print("Loaded array from plist: \(array2D)")
-                        // 在这里处理你的二维数组数据
-                        pageVC?.datas = datas
-                    }
-                }
-            } catch {
-                print("Failed to load array from plist: \(error)")
+        guard let plistFileURL = plistFileURL else { return }
+      
+        if let data = try? Data(contentsOf: plistFileURL) {
+            if let datas = try? PropertyListDecoder().decode([[String]].self, from: data) {
+                // 在这里处理你的二维数组数据
+                pageVC?.datas = datas
             }
         }
+        
+        
+    }
 
     // MARK: UISceneSession Lifecycle
     
